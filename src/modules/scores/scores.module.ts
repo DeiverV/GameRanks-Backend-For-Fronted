@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ScoresController } from './scores.controller';
 import { ClientsModule } from '@nestjs/microservices';
-import { grpcClientOptions } from 'src/grpc-options-auth';
+import { grpcClientOptions } from 'src/grpc-options-scores';
 
 @Module({
   imports: [
