@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { ClientsModule } from '@nestjs/microservices';
-import { grpcClientOptions } from 'src/grpc-options';
+import { grpcClientOptions } from 'src/grpc-options-users';
 
 @Module({
   imports: [
@@ -13,6 +13,5 @@ import { grpcClientOptions } from 'src/grpc-options';
     ]),
   ],
   controllers: [UsersController],
-  providers: [],
 })
 export class UsersModule {}
