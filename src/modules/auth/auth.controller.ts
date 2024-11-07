@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Inject, Post } from '@nestjs/common';
 import { AuthService } from './interfaces/service';
 import { ClientGrpc } from '@nestjs/microservices';
 import { LoginDto, Token } from './interfaces/messages';
@@ -13,12 +13,21 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  async login(@Body() loginDto: LoginDto) {
+    const res = await this.authService.login(loginDto);
+    return res;
   }
 
   @Post('validateToken')
-  validateToken(token: Token) {
-    return this.authService.validateToken(token);
+  async validateToken(token: Token) {
+    const res = await this.authService.validateToken(token);
+    return res;
+  }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async logout(token: Token) {
+    const res = await this.authService.logout(token);
+    return res;
   }
 }

@@ -35,45 +35,51 @@ export class UsersController {
   }
 
   @Post('auth/register')
-  createUser(@Body() data: CreateUserDto) {
-    return this.usersService.createUser(data);
+  @HttpCode(HttpStatus.CREATED)
+  async createUser(@Body() data: CreateUserDto) {
+    await this.usersService.createUser(data);
   }
 
   @Get('users/profile/:username')
-  getUserDetails(@Param('username') username: string) {
-    return this.usersService.getUserDetails({ username });
+  async getUserDetails(@Param('username') username: string) {
+    const res = await this.usersService.getUserDetails({ username });
+    return res;
   }
 
   @Put('users/profile')
   @UseInterceptors(FileInterceptor('image'))
-  updateUser(@UploadedFile() file, @Body() data: UpdateUserDto) {
+  async updateUser(@UploadedFile() file, @Body() data: UpdateUserDto) {
     const fileBase64 = file.buffer.toString('base64');
-    return this.usersService.updateUser({
+    const res = await this.usersService.updateUser({
       image: fileBase64,
       userId: data.userId,
       username: data.username,
     });
+
+    return res;
   }
 
   @Get('users/admin')
   async getAllPlayers(@Query() query: PaginationDto) {
-    return this.usersService.getAllPlayers(query);
+    const res = await this.usersService.getAllPlayers(query);
+    return res;
   }
 
   @Get('users/admin')
   async GetUsersByGame(@Query() query: GetUserByGameDto) {
-    return this.usersService.getUsersByGame(query);
+    const res = await this.usersService.getUsersByGame(query);
+    return res;
   }
 
   @Delete('users/admin/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteUser(@Param('userId') userId: string) {
-    return this.usersService.deleteUser({ userId });
+  async deleteUser(@Param('userId') userId: string) {
+    await this.usersService.deleteUser({ userId });
   }
 
   @Patch('users/admin/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  blockOrUnblockUser(@Param('userId') userId: string) {
-    return this.usersService.blockOrUnblockUser({ userId });
+  async blockOrUnblockUser(@Param('userId') userId: string) {
+    await this.usersService.blockOrUnblockUser({ userId });
   }
 }

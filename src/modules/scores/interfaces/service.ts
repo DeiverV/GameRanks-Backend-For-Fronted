@@ -13,9 +13,9 @@ import {
 export interface ScoresService {
   getUsersRankingByGame(
     request: GetUsersRankingRequest,
-  ): Observable<UsersScoreRanking>;
-  getUserScores(request: GetUserScoresDto): Observable<UserScores>;
-  getGames(request: Empty): Observable<Games>;
-  createScore(request: CreateScoreDto): Observable<Empty>;
-  deleteScore(request: ScoreId): Observable<Empty>;
+  ): Promise<Observable<UsersScoreRanking>>;
+  getUserScores(request: GetUserScoresDto): Promise<Observable<UserScores>>;
+  getGames(request: Empty): Promise<Observable<Games>>;
+  createScore(request: CreateScoreDto): Promise<Observable<Empty>>;
+  deleteScore(request: ScoreId): Promise<Observable<Empty>>;
 }

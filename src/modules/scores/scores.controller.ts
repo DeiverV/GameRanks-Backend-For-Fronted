@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Inject,
   Param,
   Post,
@@ -27,30 +29,35 @@ export class ScoresController {
   }
 
   @Get('users/scores/:userId')
-  getUserScores(
+  async getUserScores(
     @Param('userId') userId: string,
     @Query() query: GetUserScoresDto,
   ) {
-    return this.scoresService.getUserScores({ ...query, userId });
+    const res = await this.scoresService.getUserScores({ ...query, userId });
+    return res;
   }
 
   @Get('scores/games')
-  getGames() {
-    return this.scoresService.getGames({});
+  async getGames() {
+    const res = await this.scoresService.getGames({});
+    return res;
   }
 
   @Post('scores')
-  createScore(@Body() body: CreateScoreDto) {
-    return this.scoresService.createScore(body);
+  @HttpCode(HttpStatus.CREATED)
+  async createScore(@Body() body: CreateScoreDto) {
+    await this.scoresService.createScore(body);
   }
 
   @Get('scores/leaderboard')
-  getLeaderboard(@Query() query: GetUsersRankingRequest) {
-    return this.scoresService.getUsersRankingByGame(query);
+  async getLeaderboard(@Query() query: GetUsersRankingRequest) {
+    const res = await this.scoresService.getUsersRankingByGame(query);
+    return res;
   }
 
   @Delete('users/admin/scores/:scoreId')
-  deleteScore(@Param('scoreId') scoreId: string) {
-    return this.scoresService.deleteScore({ scoreId });
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteScore(@Param('scoreId') scoreId: string) {
+    await this.scoresService.deleteScore({ scoreId });
   }
 }

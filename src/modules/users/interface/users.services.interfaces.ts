@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 export interface Pagination {
   page: number;
@@ -75,14 +75,16 @@ export interface GetUserByGameDto {
 }
 
 export interface UsersService {
-  createUser(request: CreateUserDto): Observable<Empty>;
-  validateUser(request: ValidateUserDto): Observable<User>;
-  getUserDetails(request: GetUserDetailsDto): Observable<UserDetails>;
-  getAllPlayers(request: PaginationDto): Observable<AllPlayerResponse>;
-  getUsersByGame(request: GetUserByGameDto): Observable<GetUserByGameResponse>;
-  updateUser(request: UpdateUserDto): Observable<UserDetails>;
-  deleteUser(request: UserIdDto): Observable<Empty>;
-  blockOrUnblockUser(request: UserIdDto): Observable<Empty>;
+  createUser(request: CreateUserDto): Promise<Observable<Empty>>;
+  validateUser(request: ValidateUserDto): Promise<Observable<User>>;
+  getUserDetails(request: GetUserDetailsDto): Promise<Observable<UserDetails>>;
+  getAllPlayers(request: PaginationDto): Promise<Observable<AllPlayerResponse>>;
+  getUsersByGame(
+    request: GetUserByGameDto,
+  ): Promise<Observable<GetUserByGameResponse>>;
+  updateUser(request: UpdateUserDto): Promise<Observable<UserDetails>>;
+  deleteUser(request: UserIdDto): Promise<Observable<Empty>>;
+  blockOrUnblockUser(request: UserIdDto): Promise<Observable<Empty>>;
 }
 
 export interface Empty {}
